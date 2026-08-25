@@ -80,6 +80,46 @@
     }
   }
 
+  /* ---------- Request form → WhatsApp ---------- */
+  const WA_NUMBER = "529841082210";
+  const osButtons = document.querySelectorAll(".os-btn");
+  let selectedOS = "Windows";
+  osButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      osButtons.forEach((b) => b.classList.toggle("active", b === btn));
+      selectedOS = btn.dataset.os;
+    });
+  });
+
+  const problemField = document.getElementById("f-problem");
+  const charCount = document.getElementById("f-count");
+  if (problemField && charCount) {
+    problemField.addEventListener("input", () => {
+      charCount.textContent = problemField.value.length;
+    });
+  }
+
+  const requestForm = document.getElementById("request-form");
+  if (requestForm) {
+    requestForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("f-name").value.trim();
+      const device = document.getElementById("f-device").value.trim();
+      const model = document.getElementById("f-model").value.trim();
+      const problem = document.getElementById("f-problem").value.trim();
+
+      const lines = ["Hola GwenTech, quisiera solicitar un servicio."];
+      if (name) lines.push(`Nombre: ${name}`);
+      lines.push(`Sistema: ${selectedOS}`);
+      if (device) lines.push(`Equipo: ${device}`);
+      if (model) lines.push(`Modelo: ${model}`);
+      if (problem) lines.push(`Problema: ${problem}`);
+
+      const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(lines.join("\n"))}`;
+      window.open(url, "_blank", "noopener");
+    });
+  }
+
   /* ---------- Ambient circuit particle background ---------- */
   const canvas = document.getElementById("circuit-bg");
   const ctx = canvas.getContext("2d");
