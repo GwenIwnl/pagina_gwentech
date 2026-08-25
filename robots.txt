@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gweniwnl.github.io/pagina_gwentech/sitemap.xml
